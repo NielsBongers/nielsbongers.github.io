@@ -4,7 +4,7 @@
 
 Some text. Trying to add math. 
 
-$x \leq y$ 
+$$x \leq y$$ 
 
 1. Summing. 
 2. Up. 
