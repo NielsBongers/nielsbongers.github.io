@@ -2,7 +2,7 @@
 
 ## Subtitle 
 
-Some text. 
+Some text. Trying to add math. 
 
 $x \leq y$ 
 
