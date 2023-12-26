@@ -1,3 +1,8 @@
+---
+layout: default
+title: Page title
+---
+
 # Header 
 
 ## Subtitle 
