@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My GitHub Pages Site</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+    <script src="/js/loadSidebar.js" defer></script>
+    <script src="/js/main.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to My GitHub Pages Site</h1>
+    </header>
+    <nav>
+        <a href="/index.html">Home</a>
+        <a href="/pages/">Articles</a>
+    </nav>
+    <div id="content">
+        <div id="sidebar-container"></div>
+        <main>
+            <h2>About This Site</h2>
+            <p>This is a simple website hosted using GitHub Pages. You can customize it further or add more content as
+                needed.</p>
+            <h2>Contact</h2>
+            <p>Feel free to reach out to me through GitHub!</p>
+
+            <h2>Math Example</h2>
+            <p>The following is a mathematical expression rendered using LaTeX via MathJax:</p>
+            <div>
+
+            $$f = \begin{cases}
+                    0 &\qquad \| \mathbf{g} \| < d_1 \\
+                    1 - \frac{d_2 - \|\mathbf{g}\|}{d_2 - d_1} &\qquad d_1 \leq \|\mathbf{g}\| \leq d_2 \\
+                    1 &\qquad \|\mathbf{g}\| > d_2 \\
+                \end{cases}
+                $$
+
+            </div>
+
+        </main>
+    </div>
+    <footer>
+        &copy; 2024 My GitHub Pages Site
+    </footer>
+</body>
+
+</html

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My GitHub Pages Site</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+    <script src="/js/loadSidebar.js" defer></script>
+    <script src="/js/main.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to My GitHub Pages Site</h1>
+    </header>
+    <nav>
+        <a href="/index.html">Home</a>
+        <a href="/pages/">Articles</a>
+    </nav>
+    <div id="content">
+        <div id="sidebar-container"></div>
+        <main>
+            <h2>16-8-2023 - Inflatable tube man dynamics</h2>
+
+            I saw one of these somewhere last week, and got curious. I previously realized the mechanism is simple; we
+            blow in air through the bottom, of course. At that point, the tube buckles, creating a constriction, where
+            air pressure increases until it reinflates. I went into a fair bit more depth last week, and made some notes
+            in the small notebook. I will work those out here.
+
+            I think we can consider three distinct phases during normal operation: a buckled stage, where a constriction
+            has formed, followed by a period of rising, where the constriction moves upwards, and finally a point where
+            the tube is fully opened. We can then clearly see the mechanism; when the top of the tube is closed, the
+            internal pressure is sufficient to provide support to the weight of the material. We can assume it has zero
+            stiffness to make things easier.
+
+            We can now directly see three operating regimes for the air flow. First, if the velocity is below a certain
+            lower critical limit, even when the tube is buckled, the flow won't cause full inflation. This regime would
+            be present even at higher velocities if we assume the tube is at least partially permeable, so air can
+            escape through it, but let's assume it's impermeable for now. Second, the regular operating regime; when
+            buckled, there is enough pressure to inflate it all the way until it's fully vertical and opens up, but not
+            enough to keep it inflated past that point. Third, for a velocity far greater than the critical regime, we
+            would get inflation simply due to air drag; we blow the air so fast that the drag on the inside is
+            sufficient to lift up all the tube's weight.
+
+            Let's consider these. The second regime is the easiest; at any time before the tube opens, we assume the
+            internal velocity to be negligible, so that all upwards force results from the air pressure on the
+            horizontal part of the tube, so the buckled area. The minimum pressure is then
+
+            $$ p_\text{min} = \frac{mg}{A_h} = \frac{\rho_A \cdot 2 \pi r Lg}{\pi r^2} = \frac{2 \rho_A g L}{r}
+            $$
+
+            with $m$ the mass of the tube and $A_h$ the horizontal area, which we can assume to be equal to the area of
+            the tube, if the buckling closes it off fully. I realized we can also express $m$ in terms of the radius,
+            using the area density $\rho_A$. That is funny; the mass of the tube scales $\propto r$, because of the
+            circumference, but the total vertical pressure with $r^2$, so a wider tube would require less pressure.
+
+            Could we do something similar for the case where we do have significant air velocity? We would need to use
+            skin drag there, and with realistic radii, definitely the turbulent case. Wikipedia helpfully refers to
+            Anderson's \textit{Introduction to Flight} here.\cite{Anderson2016} We have
+
+            $$ C_f = \frac{0.074}{\text{Re}_L^{0.2}}
+            $$
+
+            We then have
+
+            $$ q_\infty = \frac{1}{2} \rho_\infty V_\infty^2 \qquad D_f = q_\infty S C_f
+            $$
+
+            for a plate of unit width and length $L$. Does that generalize to a tube? Let's assume $r$ is sufficient
+            that we can approximate the tube as a plate here. We can then modify the equations to
+
+            $$ F_d = \frac{1}{2} \frac{0.074}{\text{Re}_L^{0.2}} \rho_\infty V_\infty^2 A = \frac{1}{2}
+            \frac{0.074}{\text{Re}_L^{0.2}} \rho_\infty V_\infty^2 A
+            $$
+
+            It's nice to have these closed-form solutions at times. Actually - we can simplify it considerably by
+            dropping Reynolds. After a closer inspection - we could, but it'd be a mess because we have
+            $\text{Re}^{0.2}$. Let's just keep it like this. We then require this to be able to keep up our previous
+            mass. We can drop $A$ on both sides there. We then end up with
+
+            $$ v_\text{min} = \sqrt{\frac{2 \rho_A g \text{Re}_L^{0.2}}{0.074 \rho_\infty}}
+            $$
+
+            This makes sense, I would say; increasing the area density of the tube, the gravity, or Reynolds (not sure
+            about the intuition there) increases the minimum velocity; increasing $\rho_\infty$ decreases it.
+
+            Can we somehow relate $p_\text{min}$ to $v_\text{min}$? I doubt it; we're considering two different regimes
+            there. I would need to do CFD to determine how they relate exactly. For now, we can just assume that in the
+            buckled state, the pressure has to be sufficient to be able to open it fully, while in the unbuckled state,
+            the velocity has to be below $v_\text{min}$ to let it buckle again.
+
+            Let's now consider the transient behavior. Suppose we are in the final stage; the tube just opened. We
+            clearly have $p \geq p_\text{min}$, because the tube opened. Let's consider the use of $v < v_\text{min}$,
+                otherwise we already know what happens. At $t=t_0$, the buckling opens. We know $p_\text{internal}>
+                p_\text{external}$, otherwise it wouldn't have inflated. Therefore, we have the air flowing out. Suppose
+                we are at $p = p_\text{min}$. Then, at $t_0$, the tube looses structural integrity; it will start to
+                fall. How will that proceed?
+
+                This depends on the fluid's behavior again. To simplify things, let's continue assuming the tube has no
+                stiffness (this seems reasonable), and for ease of argument, that we can consider the vertical behavior
+                of each infinitesimal segment as separate from the others, at least in the $\hat {\mathbf z}$ direction;
+                we also neglect the tensile strength there. As long as none of the pieces fall significantly faster than
+                the others, that would make sense; the forces wouldn't make a difference there either way, then.
+
+                We then have two characteristic times. First - the rate at which the air inside the tube reaches
+                equilibrium, $\tau_\text{fluid}$. We are still flowing air through the compressor, so the pressure will
+                never fully equalize, but we can define this as the internal pressure dropping to a level significantly
+                below $p_\text{min}$, to the point where it has limited influence. Second - the time for the tube to
+                fall to the ground, $\tau_\text{collapse}$.
+
+                Suppose the fluid instantly equilibriates, throughout the entire length of the tube. That corresponds to
+                $\tau_\text{fluid} \ll \tau_\text{collapse}$. At that point, the tube instantly loses structural
+                integrity, and starts to collapse. We assume each part does this separately, at the same rate, so the
+                shape of the tube is maintained; if it was at a certain angle initially, it will remain at that angle.
+                Each individual part may accelerate, but their relative vertical velocities will remain the same.
+
+                On the other extreme, we have $\tau_\text{fluid} \gg \tau_\text{collapse}$. In that case, parts of the
+                tube will start falling while others are still supported by the internal pressure. We would see
+                curvature then; eventually, all regions reach $p < p_\text{min}$, but the top would already have fallen
+                    further than the bottom parts. If $\tau_\text{fluid} \approx \tau_\text{collapse}$, we see behavior
+                    somewhere in between this; the tube would show some curvature. Now, it's difficult to anticipate
+                    $\tau_\text{fluid}$ without CFD. However, we can say something about $\tau_\text{collapse}$ here.
+                    Assuming $\rho_A$ is low and $r$ is high - which is always met for these things; we don't use a lead
+                    tube of a few millimiters wide here, for obvious reasons - the terminal velocity $v_\text{terminal}$
+                    is hit almost instantly. We have $$ v_\text{terminal}=\sqrt{\frac{2 mg}{C_d \rho_\infty
+                    A/2}}=\sqrt{\frac{4 \rho_A g}{C_d \rho_\infty}} $$ Here, $A$ is the overall area, of which only half
+                    counts for the drag, so I've taken $A/2$ here, hence the 4 in the numerator; two from the drag
+                    equation, and two from the $A/2$. We can then replace $m$ with $\rho_A A$. Is this correct? We have
+                    no dependence on $r$ here - that is a bit odd. I think it's correct, though, and if we consider the
+                    limiting cases, it makes sense. Suppose we use $\rho_A=1$ kg/m$^2$ (I have no clue there), $C_d=1$
+                    and $\rho_\infty=1.3$- we then get a terminal velocity of 5.49 m/s. That seems way too high. I think
+                    I'm massively overestimating $\rho_A$. It turns out nylon 66, as an example of a textile material,
+                    has an area density of 9.5 g/m$^2$.\cite{Ali2022} That is far lower than anticipated. With that, our
+                    terminal velocity is 0.54 m/s. That still seems higher than what I would have expected, but let's
+                    roll with it for now. How long does it take to reach this terminal velocity? That's a bit difficult;
+                    it approaches asymptotically. StackExchange suggests:<a
+                    href=https://physics.stackexchange.com/questions/439294/is-there-a-way-to-calculate-the-time-taken-by-a-falling-object-to-reach-terminal>
+                    link</a>
+
+                    $$ \tau_\text{terminal} = \frac{v_t}{g}
+                    $$
+
+                    Does that make sense? The unit is is correct, at least, but why is this a reasonable choice? I
+                    guess, initially $v_t$ accelerates with $g$, with that effect diminishing over time, until the
+                    acceleration tends to zero at infinity. I guess $g$ is the rate at which we approach $v_t$ without
+                    any drag effects present, so it make sense there. Bing suggests
+
+                    $$ s = s_0 + v_0 t + \frac{1}{2} a t^2 \qquad s/v_0 = s_0/v_0 + v_0/v_0 t + \frac{1}{2} a/v_0 t^2
+                    $$
+
+                    where we take $\tau = a/v_0$, so that for $t \to \infty$, the quadratic term dominates, and we find
+                    $s/v_0 \approx 1/2 \tau t^2$. I'm not sure that really makes sense, though. I'm also wondering if
+                    this makes sense for a case with air drag.
+
+                    Either way - we can see that the terminal velocity is low, and that it would reach it almost
+                    instantly. That makes sense intuitively too; we have a low-density, high-area tube here. We then
+                    have linear motion. The characteristic collapse time for a particular section is then just
+
+                    $$ \tau_\text{collapse} = \frac{h}{v_\text{terminal}}
+                    $$
+
+                    where $h$ is the height of the current segment, and $h = L$ is the time it would take for the entire
+                    tube to collapse. The top would start falling first (because there, the pressure instantly
+                    equilibriates), so assuming $\tau_\text{terminal} \approx 0$, that means the tube will fall at most
+                    that time.
+
+                    At that point, the case that $\tau_\text{fluid} \ll \tau_\text{collapse}$ seems far more likely; we
+                    have several seconds for the tube to fall, while air will flow out very rapidly. That would then
+                    imply that the tube falls in a roughly straight line
+
+                    Now, one point I haven't considered here yet - around the pressure source, we do have some net
+                    velocity. We would then have a pressure gradient, with the difference between the internal and
+                    external pressures at a maximum there, as well as surface drag. It would then make sense to consider
+                    the tube as two separate regions; one where the source provides a reasonably constant structural
+                    integrity. This is mostly based on what I saw; the buckling usually doesn't occur near the bottom,
+                    but rather somewhere halfway.
+
+                    The behavior after buckling is quite clear, really; we apply a certain pressure at the source. Would
+                    the pressure in the tube change over time? I doubt it. Actually; maybe it would. Consider what we
+                    are doing here. We have a tube, with a buckled point somewhere at $h \in [0, L]$. We have a constant
+                    pressure source, leading to expansion. It then has to lift up a certain amount of mass, so the range
+                    $[h, L]$. That decreases over time, leading to acceleration. We also see that in practice; I
+                    believe.
+
+                    Do we have any idea about the buckling itself? Not particularly. I suppose what we have here is the
+                    bottom, rigid region, and the top which collapses when $p < p_\text{min}$. That collapse is in a
+                        random direction, because the tube moves around a lot. We assume $\tau_\text{fluid} \ll
+                        \tau_\text{collapse}$, so the entire upper region of the tube will collapse roughly rigidly too,
+                        in one direction, until the intersection between the bottom and the top buckles, and $p>
+                        p_\text{min}$ again.
+
+                        Can we say something about the characteristic time between those? For the buckling, I suppose we
+                        can express it as the volume flowing in (assuming pressure is constant, we can use Bernoulli, I
+                        suppose); if we buckle at $h$, we need to fill $(L - h) \pi r^2$ of volume. From Bernoulli, we
+                        have
+
+                        $$ p + \rho g h + \frac{1}{2} \rho v^2 = p_\text{source}
+                        $$
+
+                        We assume we are feeding from some large reservoir here. Is the height term relevant? Probably,
+                        I suppose; our velocity isn't that high, I guess. We can approximate the flow velocity from
+                        this, and estimate the rate at which we fill up the tube, assuming we buckled at $h$. Actually -
+                        aren't we making a mistake here, now? We also need to consider the pressure head from lifting up
+                        the mass of the tube, not just the fluid head from $\rho g h$. Suppose we are at $h$. We then
+                        need to lift up
+
+                        $$ m_\text{tube} = 2 \pi r \rho_A h
+                        $$
+
+                        Actually - that's incorrect; it's not like we have the tube hanging on the ground. The fluid
+                        needs to lift up the entire tube once we're at $h \geq L$; even if the top length hangs straight
+                        down, then, it still can't lie on the ground. Let's assume that's the case, or at least that an
+                        irrelevant amount of force is contributed by the ground. We then have
+
+                        $$ m_\text{tube} = 2 \pi r L \rho_A
+                        $$
+
+                        so the full mass of the tube being lifted at all times. The potential energy term for Bernoulli
+                        is then
+
+                        $$ p + \rho g h + \frac{1}{2} \rho v^2 + 2 \pi r L \rho_A g h = p_\text{source}
+                        $$
+
+                        Now, $h$ varies with time, so depending on how important those two terms are, this equation
+                        could be a bit tricky, but let's assume they're not. Alternatively, we can just evaluate the
+                        filling velocity at different values of $h \in [0, L]$. We now have
+
+                        $$ v = \sqrt{\frac{1}{\rho} \left ( p_\text{source} - p - \rho g h - 2 \pi r L \rho_A g h \right
+                        ) }
+                        $$
+
+                        At that point, the filling time at one particular $h$ (which doesn't make much sense, because
+                        that's integrating over $[0, t_\text{filled}]$, unless the $h$ terms are indeed irrelevant, or
+                        $h$ itself is constant, which doesn't make sense at all - but let's disregard that for now) is
+
+                        $$
+                        \begin {split}
+                        \tau_\text{filling} &= \frac{(L - h) \pi r^2}{\pi r^2 \sqrt{\frac{1}{\rho} \left (
+                        p_\text{source} - p - \rho g h - 2 \pi r L \rho_A g h \right )}} \\
+                        &= \frac{L - h}{\sqrt{\frac{1}{\rho} \left (
+                        p_\text{source} - p - \rho g h - 2 \pi r L \rho_A g h \right )}} \\
+                        &\approx \frac{L - h}{\sqrt{\frac{1}{\rho} \left (
+                        p_\text{source} - p \right )}}
+                        \end {split}
+                        $$
+
+                        Interesting - we know $\rho_A$ is very small, so this again doesn't depend strongly on $r$.
+                        Actually; I just thought of something; we have $p_\text{source}$ and $p$ in the order of $10^5$
+                        Pa. Obviously, $\rho g h$ is far less than that. We can then simplify everything even further,
+                        and notice that, indeed, the filling time hardly depends on $h(t)$, only on $h(t_0)$.
+
+                        Suppose we then know the length of the two sections; we can now estimate the collapse time, then
+                        the rise time as well, as well as the regimes where that will happen; we have the minimum
+                        pressure and the maximum velocity, where we can relate the latter to pressure using Bernoulli
+                        too, I suppose.
+        </main>
+    </div>
+    <footer>
+        &copy; 2024 My GitHub Pages Site
+    </footer>
+</body>
+
+</html>

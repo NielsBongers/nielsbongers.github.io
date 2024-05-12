@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["MaterialNames"],"fn":["get_material_data_vector","map_enum_to_indices","map_indices_to_enum"],"struct":["MaterialProperties"]};

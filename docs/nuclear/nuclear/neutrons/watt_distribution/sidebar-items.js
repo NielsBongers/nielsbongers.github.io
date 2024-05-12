@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["rejection_sample_watt"]};

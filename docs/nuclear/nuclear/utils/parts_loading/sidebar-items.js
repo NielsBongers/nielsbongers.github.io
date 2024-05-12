@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["load_geometries"],"struct":["CuboidTOML","CylinderTOML","SphereTOML"]};

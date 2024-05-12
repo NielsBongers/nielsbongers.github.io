@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["binary_search","get_watt_parameters","interpolate_values","linear_interpolation"],"struct":["BinarySearchResult"]};

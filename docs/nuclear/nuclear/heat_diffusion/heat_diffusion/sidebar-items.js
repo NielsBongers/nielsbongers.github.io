@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["bins_to_index","create_temperature_array","solve_fvm","solve_fvm_from_file_data","write_heat_diffusion_results"]};

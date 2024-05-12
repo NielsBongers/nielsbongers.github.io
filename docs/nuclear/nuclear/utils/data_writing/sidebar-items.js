@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["write_bin_results_grid","write_bin_results_vector"]};

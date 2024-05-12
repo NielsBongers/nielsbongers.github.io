@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["plot_geometry","plot_geometry_slice"]};

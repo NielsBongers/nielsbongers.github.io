@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["diagnostics","geometry","heat_diffusion","materials","neutrons","simulation","utils"]};
