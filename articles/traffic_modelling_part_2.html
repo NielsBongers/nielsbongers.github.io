@@ -64,7 +64,7 @@ Index(['DayNum', 'VehId', 'Trip', 'Timestamp(ms)', 'Latitude[deg]',
         It's a pain getting the decimals removed - there were a ton of unnecessary zeros. The Styler is a pain - just
         search/replace is easier. It's also a real pain getting this to display properly - GPT4o and Stackexchange had
         lots of suggestions that didn't work, but in the end, the <code>makebox</code> command saved the day: it always
-        works with images too.</p>
+        works with images too.</p></p>
 
     <div style="overflow-x: auto;">
         <table>
@@ -244,7 +244,7 @@ def concatenate_datasets(root: str):
         <p>All the dummies have very strong collinearity. How is that measured? I was thinking about that, and I think we could
             take</p>
         
-        <p>\(\mathbf i_1 = \frac{\mathbf P_{\mathbf X_1} \bm \iota}{||\mathbf P_{\mathbf X_1} \bm \iota||}\)</p>
+        <p>\(\mathbf i_1 = \frac{\mathbf P_{\mathbf X_1} \boldsymbol \iota}{||\mathbf P_{\mathbf X_1} \boldsymbol \iota||}\)</p>
         
         <p>as a measure: we essentially compare the two projection matrices. We can then take \(\mathbf i_i \cdot \mathbf i_2\)
             to actually check the multicollinearity between these two. <code>statsmodels</code> reports a condition number
@@ -379,7 +379,7 @@ def concatenate_datasets(root: str):
             </tr>
         </table>
         
-        <p>We have a giant \(F\)-value - the null that \(\bm \beta = \mathbf 0\) is definitely rejected, then. From that, our
+        <p>We have a giant \(F\)-value - the null that \(\boldsymbol \beta = \mathbf 0\) is definitely rejected, then. From that, our
             \(p\)-value is also great - the integral to the right of our critical value is zero, so the probability of being
             there is zero: our model is statistically significant. The negative \(t\)-values are just for the direction, so the
             fact that they're so large implies they are also individually significant.</p>
