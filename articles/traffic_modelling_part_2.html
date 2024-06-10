@@ -422,9 +422,9 @@ def concatenate_datasets(root: str):
 
             <p>Interestingly, the Durbin-Watson test implies a lot of autocorrelation. <a
                     href="https://en.wikipedia.org/wiki/Durbin%E2%80%93Watson_statistic">Durbin-Watson statistic</a>
-                It's :</p>
+                It's defined as:</p>
 
-            <p>$d = \frac{\sum_{t=2}^T (e_t - e_{t-1})^2}{\sum_{t=2}^T e_t^2}$$</p>
+            <p>$$d = \frac{\sum_{t=2}^T (e_t - e_{t-1})^2}{\sum_{t=2}^T e_t^2}$$</p>
 
             <p>That makes a lot of sense: we essentially calculate the squared difference between successive items,
                 compared to the square of the item itself. I suppose this makes sense - we technically have a time
