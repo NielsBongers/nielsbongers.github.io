@@ -34,8 +34,10 @@
 
             <h3>10-6-2024 - Traffic modelling - part 2</h3>
 
-            <p>I found a paper with a traffic speed dataset. The focus here is on the energy, but that's fine. I'm rather surprised
-                at the distribution: far more cars exceed the speed limit than I would have expected (with more than 30 km/h in some cases), but there are also a lot that are very slow.</p>
+            <p>I found a paper with a traffic speed dataset. The focus here is on the energy, but that's fine. I'm
+                rather surprised
+                at the distribution: far more cars exceed the speed limit than I would have expected (with more than 30
+                km/h in some cases), but there are also a lot that are very slow.</p>
 
             <p>
             <figure>
@@ -275,46 +277,21 @@ def concatenate_datasets(root: str):
                 but that's fine; it only looks a bit ugly.</p>
 
             <p>Now, how can we analyze this? What we need is some distribution conditional on the speed limit. At that
-                point, we
-                could draw from that distribution,
+                point, we could draw from that distribution, and simulate the batching - that would be fun. How can we
+                interpolate? We should be able to regress over the speed limit. Any other parameters that seem relevant?
+                'Intersection', 'Bus Stops' and 'Focus Points', I suppose. Focus points are any locations that could
+                cause a change in speed, such as crossings, traffic signals, crossings etc. - sixteen in total. I
+                suppose we can include their presence as a dummy. They actually have them as categorical - that's maybe
+                a bit painful.</p>
 
+            <p>Let's consider - can we just do OLS on this data? Do we have any interaction between the parameters? That would imply overspecification, which isn't too bad: we have a lot of data here, so the increase in variance is probably acceptable. Then - is everything exogenous? We have the actual speed as the dependent variable - are all my parameters exogenous for that? I suppose the speed limit could have been changed in the past to reflect driving speeds etc., but that seems like something we can probably safely ignore. For the most part, I think everything would make sense to be exogenous here.</p>
 
-                and simulate the batching - that would be fun. How can we interpolate? We should be able to regress over
-                the speed
-                limit. Any other parameters that seem relevant? 'Intersection', 'Bus Stops' and 'Focus Points', I
-                suppose. Focus points
-                are any locations that could cause a change in speed, such as crossings, traffic signals, crossings etc.
-                - sixteen in
-                total. I suppose we can include their presence as a dummy. They actually have them as categorical -
-                that's maybe a bit
-                painful.</p>
-
-            <p>Let's consider - can we just do OLS on this data? Do we have any interaction between the parameters? That
-                would imply
-                overspecification, which isn't too bad: we have a lot of data here, so the increase in variance is
-                probably
-                acceptable. Then - is everything exogenous? We have the actual speed as the dependent variable - are all
-                my
-                parameters exogenous for that? I suppose the speed limit could have been changed in the past to reflect
-                driving
-                speeds etc., but that seems like something we can probably safely ignore. For the most part, I think
-                everything
-                would make sense to be exogenous here.</p>
-
-            <p>All the dummies have very strong collinearity. How is that measured? I was thinking about that, and I
-                think we could
-                take</p>
+            <p>All the dummies have very strong collinearity. How is that measured? I was thinking about that, and I think we could take</p>
 
             <p>$$\mathbf i_1 = \frac{\mathbf P_{\mathbf X_1} \boldsymbol \iota}{||\mathbf P_{\mathbf X_1} \boldsymbol
                 \iota||}$$</p>
 
-            <p>as a measure: we essentially compare the two projection matrices. We can then take $\mathbf i_i \cdot
-                \mathbf i_2$
-                to actually check the multicollinearity between these two. <code>statsmodels</code> reports a condition
-                number
-                instead. That's the ratio between the largest and smallest eigenvalue - that makes some sense, actually.
-                For the
-                more reasonable case without all the dummies, we have</p>
+            <p>as a measure: we essentially compare the two projection matrices. We can then take $\mathbf i_i \cdot \mathbf i_2$ to actually check the multicollinearity between these two. <code>statsmodels</code> reports a condition number  instead. That's the ratio between the largest and smallest eigenvalue - that makes some sense, actually. For the more reasonable case without all the dummies, we have</p>
 
             <table>
                 <tr>
