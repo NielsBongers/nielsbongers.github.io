@@ -147,14 +147,14 @@ img {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: 10px 0;
-    font-size: 8px;
+    margin: 5px 0;
+    font-size: 12px;
     text-align: left;
 }
 
 th,
 td {
-    padding: 12px 15px;
+    padding: 4px 15px;
     border: 1px solid #ddd;
 }
 
