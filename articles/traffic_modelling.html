@@ -31,39 +31,40 @@
         <div id="sidebar-container"></div>
         <main>
 
-            <!-- <pre><code class="language-python">
-            def greet(name):
-                print(f"Hello, {name}!")
-            </code></pre>
-
-            <pre><code class="language-rust">
-            fn main() {
-                println!("Hello, Rust!");
-            }
-            </code></pre> -->
-
             <h3>9-6-2024 - Traffic gaps</h3>
 
-            <p>I've been rather curious about these for a few months; I have to cross traffic when leaving the office. Depending on
-                traffic flow, there are clumps of cars followed by sizeable gaps. I was curious what kind of distribution those gaps
+            <p>I've been rather curious about these for a few months; I have to cross traffic when leaving the office.
+                Depending on
+                traffic flow, there are clumps of cars followed by sizeable gaps. I was curious what kind of
+                distribution those gaps
                 followed - how large are they, on average, and how does their size relate to their frequency?</p>
 
-            <p>While walking to the supermarket, I walked along a road, and had some time to consider this further. I considered
-                using some footage to analyze these things, when I realized that footage is usually from highways, where that
-                doesn't occur. Why not? I think it's because you have easy passing. That implies that the reason they form in
+            <p>While walking to the supermarket, I walked along a road, and had some time to consider this further. I
+                considered
+                using some footage to analyze these things, when I realized that footage is usually from highways, where
+                that
+                doesn't occur. Why not? I think it's because you have easy passing. That implies that the reason they
+                form in
                 municipal traffic is because cars can't easily pass each other.</p>
 
-            <p>At that point, the answer is rather simple. Suppose we have a group of <span>$N$</span> cars - perhaps released in
+            <p>At that point, the answer is rather simple. Suppose we have a group of <span>$N$</span> cars - perhaps
+                released in
                 one batch from a traffic light. That directly implies there is some gap between successive traffic light
-                activations, but let's ignore that for now - it averages out either way for longer stretches; it's simply convenient
+                activations, but let's ignore that for now - it averages out either way for longer stretches; it's
+                simply convenient
                 to have some large-but-finite population <span>$N$</span>.</p>
 
-            <p>We have some preferred speed for each car, suppose <span>$v_i$</span>, <span>$i \in N$</span>. The group is also an
-                ordered set - the cars can't cross each other. At that point, at steady-state - so ignoring acceleration etc. - the
-                maximum speed of the set <span>$i \in [0, N-1]$</span> is <span>$v_N$</span>: the car at the front determines the
+            <p>We have some preferred speed for each car, suppose <span>$v_i$</span>, <span>$i \in N$</span>. The group
+                is also an
+                ordered set - the cars can't cross each other. At that point, at steady-state - so ignoring acceleration
+                etc. - the
+                maximum speed of the set <span>$i \in [0, N-1]$</span> is <span>$v_N$</span>: the car at the front
+                determines the
                 speed for everyone, because nobody can pass. Then, for the set <span>$i \in [0, N-2]$</span>, we have
-                <span>$v_{N-1}$</span> as the maximum speed, as long as <span>$v_{N-1} \geq v_{N}$</span>, and so on. I guess we can
-                write this more compactly as</p>
+                <span>$v_{N-1}$</span> as the maximum speed, as long as <span>$v_{N-1} \geq v_{N}$</span>, and so on. I
+                guess we can
+                write this more compactly as
+            </p>
 
             <p>
                 $$ v_{0, \ldots, n}^\text{max} = \text{inf} \{v_{n+1}, v_{n+2}, \ldots, v_N \} $$
@@ -75,36 +76,33 @@
                 $$ v_0^\text{max} = \text{inf} \{v_1, \ldots, v_N\} $$
             </p>
 
-            <p>We can now also easily describe the batching behavior: for any car <span>$i$</span>, we have a batch for <span>$i-1,
-                    i-2, \ldots$</span> if <span>$v_{i-1} \geq v_i$</span>, <span>$v_{i-2} \geq v_i$</span> etc. At that point, the
-                cars will remain at the same speed as <span>$i$</span>, because they can't pass. We can then consider a batch as any
-                set where the greatest element of the set (i.e. the front-most car, so the largest <span>$i$</span>) also satisfies
+            <p>We can now also easily describe the batching behavior: for any car <span>$i$</span>, we have a batch for
+                <span>$i-1,
+                    i-2, \ldots$</span> if <span>$v_{i-1} \geq v_i$</span>, <span>$v_{i-2} \geq v_i$</span> etc. At that
+                point, the
+                cars will remain at the same speed as <span>$i$</span>, because they can't pass. We can then consider a
+                batch as any
+                set where the greatest element of the set (i.e. the front-most car, so the largest <span>$i$</span>)
+                also satisfies
             </p>
 
             <p>
                 $$ v_i = \text{inf} \{v_i, v_{i-1}, \ldots \} $$
             </p>
 
-            <p>That is - if the front-most car is also the slowest in the set, that set forms a batch. If some car is even slower,
+            <p>That is - if the front-most car is also the slowest in the set, that set forms a batch. If some car is
+                even slower,
                 that car will form a new batch (possibly consisting of just that car, if <span>$i = 0$</span>).</p>
 
-            <p>At that point, what determines <span>$v_i$</span>? That'd be the preferred speed in something like the intelligent
-                driver model. Those are very easy - we coded one before in <span>C++</span>. Is there data on the preferred speed?
-                Suppose we have a maximum speed <span>$v^\text{max}$</span> - I would assume most people drive just below or at the
-                speed limit, a few above, some below, with a non-zero probability of zero speed associated with breakdowns. To
+            <p>At that point, what determines <span>$v_i$</span>? That'd be the preferred speed in something like the
+                intelligent
+                driver model. Those are very easy - we coded one before in <span>C++</span>. Is there data on the
+                preferred speed?
+                Suppose we have a maximum speed <span>$v^\text{max}$</span> - I would assume most people drive just
+                below or at the
+                speed limit, a few above, some below, with a non-zero probability of zero speed associated with
+                breakdowns. To
                 measure this, we could simply take the first car of any given batch.</p>
-
-            <p>I found a paper on this.<cite>Zhang2022</cite> The focus here is on the energy, but that's fine. I'm rather surprised
-                at the distribution: far more cars exceed the speed limit than I would have expected (with more than 30 km/h in some
-                cases), but there are also a lot that are very slow.</p>
-
-            <p>
-            <figure>
-                <img src="static/09062024 - Traffic modelling - Vehicle speed limit at 48 kmh.png"
-                    alt="Vehicle speed distribution with speed limit at 48 km/h" style="width:100%">
-                <figcaption>Vehicle speed distribution with speed limit at 48 km/h.<cite>Zhang2022</cite></figcaption>
-            </figure>
-            </p>
 
         </main>
     </div>

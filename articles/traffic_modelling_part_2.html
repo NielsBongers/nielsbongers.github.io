@@ -27,20 +27,35 @@
         <a href="/index.html">Home</a>
         <a href="/pages/">Articles</a>
     </nav>
+
     <div id="content">
         <div id="sidebar-container"></div>
         <main>
-    <p>The authors have made a dataset available - I am downloading that now. <a
-            href="https://bitbucket.org/datarepo/eved_dataset/src">https://bitbucket.org/datarepo/eved_dataset/src</a>
-        It's an enormous amount of data - 54 CSVs. It seems they haven't actually matched the speed limits to data. They
-        use an external service for that. Actually - Meili/Valhalla is not an external service; it's an open-source tool
-        for OpenStreetMap. <a
-            href="https://towardsdatascience.com/map-matching-done-right-using-valhallas-meili-f635ebd17053?gi=9b3e9e47f148">Map
-            Matching Done Right Using Valhalla's Meili</a></p>
 
-    <p>Actually, looking at the columns, speed limit may already be in there.</p>
+            <p>I found a paper with a traffic speed dataset. The focus here is on the energy, but that's fine. I'm rather surprised
+                at the distribution: far more cars exceed the speed limit than I would have expected (with more than 30 km/h in some cases), but there are also a lot that are very slow.</p>
 
-    <pre><code class="language-python">
+            <p>
+            <figure>
+                <img src="static/09062024 - Traffic modelling - Vehicle speed limit at 48 kmh.png"
+                    alt="Vehicle speed distribution with speed limit at 48 km/h" style="width:100%">
+                <figcaption>Vehicle speed distribution with speed limit at 48 km/h.<cite>Zhang2022</cite></figcaption>
+            </figure>
+            </p>
+
+            <p>The authors have made a dataset available - I am downloading that now. <a
+                    href="https://bitbucket.org/datarepo/eved_dataset/src">https://bitbucket.org/datarepo/eved_dataset/src</a>
+                It's an enormous amount of data - 54 CSVs. It seems they haven't actually matched the speed limits to
+                data. They
+                use an external service for that. Actually - Meili/Valhalla is not an external service; it's an
+                open-source tool
+                for OpenStreetMap. <a
+                    href="https://towardsdatascience.com/map-matching-done-right-using-valhallas-meili-f635ebd17053?gi=9b3e9e47f148">Map
+                    Matching Done Right Using Valhalla's Meili</a></p>
+
+            <p>Actually, looking at the columns, speed limit may already be in there.</p>
+
+            <pre><code class="language-python">
 >>> df.columns
 Index(['DayNum', 'VehId', 'Trip', 'Timestamp(ms)', 'Latitude[deg]',
        'Longitude[deg]', 'Vehicle Speed[km/h]', 'MAF[g/sec]',
@@ -58,141 +73,169 @@ Index(['DayNum', 'VehId', 'Trip', 'Timestamp(ms)', 'Latitude[deg]',
       dtype='object')
     </code></pre>
 
-    <p>That's surprising.</p>
+            <p>That's surprising.</p>
 
-    <p>It turns out we can directly output Pandas to \(\LaTeX\). I vaguely knew that but must have forgotten about it.
-        It's a pain getting the decimals removed - there were a ton of unnecessary zeros. The Styler is a pain - just
-        search/replace is easier. It's also a real pain getting this to display properly - GPT4o and Stackexchange had
-        lots of suggestions that didn't work, but in the end, the <code>makebox</code> command saved the day: it always
-        works with images too.</p></p>
+            <p>It turns out we can directly output Pandas to \(\LaTeX\). I vaguely knew that but must have forgotten
+                about it.
+                It's a pain getting the decimals removed - there were a ton of unnecessary zeros. The Styler is a pain -
+                just
+                search/replace is easier. It's also a real pain getting this to display properly - GPT4o and
+                Stackexchange had
+                lots of suggestions that didn't work, but in the end, the <code>makebox</code> command saved the day: it
+                always
+                works with images too.</p>
+            </p>
 
-    <div style="overflow-x: auto;">
-        <table>
-            <tr>
-                <th></th>
-                <th>DayNum</th>
-                <th>VehId</th>
-                <th>Trip</th>
-                <th>Vehicle Speed[km/h]</th>
-                <th>Class of Speed Limit</th>
-                <th>Speed Limit[km/h]</th>
-                <th>Speed Limit with Direction[km/h]</th>
-            </tr>
-            <tr>
-                <td>0</td>
-                <td>9.0</td>
-                <td>8.0</td>
-                <td>730.0</td>
-                <td>48.0</td>
-                <td>1.0</td>
-                <td>40</td>
-                <td>40.0</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>9.0</td>
-                <td>8.0</td>
-                <td>730.0</td>
-                <td>49.0</td>
-                <td>1.0</td>
-                <td>40</td>
-                <td>40.0</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>9.0</td>
-                <td>8.0</td>
-                <td>730.0</td>
-                <td>49.0</td>
-                <td>1.0</td>
-                <td>40</td>
-                <td>40.0</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>9.0</td>
-                <td>8.0</td>
-                <td>730.0</td>
-                <td>49.0</td>
-                <td>1.0</td>
-                <td>40</td>
-                <td>40.0</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>9.0</td>
-                <td>8.0</td>
-                <td>730.0</td>
-                <td>50.0</td>
-                <td>1.0</td>
-                <td>40</td>
-                <td>40.0</td>
-            </tr>
-        </table>
-    </div>
+            <div style="overflow-x: auto;">
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>DayNum</th>
+                        <th>VehId</th>
+                        <th>Trip</th>
+                        <th>Vehicle Speed[km/h]</th>
+                        <th>Class of Speed Limit</th>
+                        <th>Speed Limit[km/h]</th>
+                        <th>Speed Limit with Direction[km/h]</th>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>9.0</td>
+                        <td>8.0</td>
+                        <td>730.0</td>
+                        <td>48.0</td>
+                        <td>1.0</td>
+                        <td>40</td>
+                        <td>40.0</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>9.0</td>
+                        <td>8.0</td>
+                        <td>730.0</td>
+                        <td>49.0</td>
+                        <td>1.0</td>
+                        <td>40</td>
+                        <td>40.0</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>9.0</td>
+                        <td>8.0</td>
+                        <td>730.0</td>
+                        <td>49.0</td>
+                        <td>1.0</td>
+                        <td>40</td>
+                        <td>40.0</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>9.0</td>
+                        <td>8.0</td>
+                        <td>730.0</td>
+                        <td>49.0</td>
+                        <td>1.0</td>
+                        <td>40</td>
+                        <td>40.0</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>9.0</td>
+                        <td>8.0</td>
+                        <td>730.0</td>
+                        <td>50.0</td>
+                        <td>1.0</td>
+                        <td>40</td>
+                        <td>40.0</td>
+                    </tr>
+                </table>
+            </div>
 
-    <p>What's the class of speed limit, and what's the difference between the speed limit and the directional one? The
-        directional one is apparently in case the road is bidirectional. It seems it's possible for the speed limit to
-        vary based on the direction. I think they probably encountered this in the data and had to fit this in somehow,
-        I think it's based on an existing dataset structure. We can simply use the directional component - that's always
-        for the direction the car is travelling in. How about the class? That seems to be related to 'advisory' and
-        'practical' in OpenStreetMap. The majority is class 1, which is just the regular maximum speed. Class 1 is the
-        default speed limit - I suppose it's not specifically stated. Indeed, that's the case. 2 is advisory, but not
-        legally binding, and 3 is the practical limit where no limits exist - that's also interesting. Class -1 is for
-        something called maximum backward speed - I have no idea what that means. Luckily that's only for a tiny
-        fraction of the records - class 0 and 1 represent 81.7 and 14.4\% of cases, respectively - together 96.1\%:
-        we'll just drop all the other classes. With that, we have 577.635 entries remaining.</p>
+            <p>What's the class of speed limit, and what's the difference between the speed limit and the directional
+                one? The
+                directional one is apparently in case the road is bidirectional. It seems it's possible for the speed
+                limit to
+                vary based on the direction. I think they probably encountered this in the data and had to fit this in
+                somehow,
+                I think it's based on an existing dataset structure. We can simply use the directional component -
+                that's always
+                for the direction the car is travelling in. How about the class? That seems to be related to 'advisory'
+                and
+                'practical' in OpenStreetMap. The majority is class 1, which is just the regular maximum speed. Class 1
+                is the
+                default speed limit - I suppose it's not specifically stated. Indeed, that's the case. 2 is advisory,
+                but not
+                legally binding, and 3 is the practical limit where no limits exist - that's also interesting. Class -1
+                is for
+                something called maximum backward speed - I have no idea what that means. Luckily that's only for a tiny
+                fraction of the records - class 0 and 1 represent 81.7 and 14.4\% of cases, respectively - together
+                96.1\%:
+                we'll just drop all the other classes. With that, we have 577.635 entries remaining.</p>
 
-    <p>Now, let's see how we can analyze things. The speed limit with direction has the same number of entries as the
-        regular speed limit. It seems they're just exactly the same - this returns nothing. Odd.</p>
+            <p>Now, let's see how we can analyze things. The speed limit with direction has the same number of entries
+                as the
+                regular speed limit. It seems they're just exactly the same - this returns nothing. Odd.</p>
 
-    <pre><code class="language-python">
+            <pre><code class="language-python">
 df[df["Speed Limit with Direction[km/h]"] != df["Speed Limit[km/h]"].astype(np.float64)]
     </code></pre>
 
-    <p>Let's still use the directional one. Now, I want to compare the actual speed conditional on the speed limit. How
-        many unique speed limits are there? Surprisingly, not that many. I was expecting a lot of strange, fractional
-        cases. I suppose these are converted from miles/h. That seems to be the case: the weird 72 km/h limit is for
-        example close to 45 miles/h. I'm a bit surprised there - it's around 44.5 miles/h; shouldn't they have put 72.42
-        km/h in the database? Maybe OpenStreetMap doesn't handle them like that - odd.</p>
+            <p>Let's still use the directional one. Now, I want to compare the actual speed conditional on the speed
+                limit. How
+                many unique speed limits are there? Surprisingly, not that many. I was expecting a lot of strange,
+                fractional
+                cases. I suppose these are converted from miles/h. That seems to be the case: the weird 72 km/h limit is
+                for
+                example close to 45 miles/h. I'm a bit surprised there - it's around 44.5 miles/h; shouldn't they have
+                put 72.42
+                km/h in the database? Maybe OpenStreetMap doesn't handle them like that - odd.</p>
 
-    <pre><code class="language-python">
+            <pre><code class="language-python">
 array([ 40.,  56.,  48.,  89.,  72.,  80.,  64., 113.,  16., 105.,  24.,
         32.])
     </code></pre>
 
-    <p>Regardless - we have quite a varied sample - nice to see.</p>
+            <p>Regardless - we have quite a varied sample - nice to see.</p>
 
-    <figure>
-        <img src="/static/09062024 - Traffic modelling - speed limit histogram.png" alt="Histogram of speed limits"
-            style="width: 100%;">
-        <figcaption>Histogram of speed limits.</figcaption>
-    </figure>
+            <figure>
+                <img src="/static/09062024 - Traffic modelling - speed limit histogram.png"
+                    alt="Histogram of speed limits" style="width: 100%;">
+                <figcaption>Histogram of speed limits.</figcaption>
+            </figure>
 
-    <p>How should we proceed? I think we can take the common speeds - dropping 20 and 80 - 113 km/h. Actually - where
-        are you allowed to drive 113 km/h? That's 70 miles/h. I suppose highways - given fractal behavior, I suppose the
-        majority of data would be from municipal and city roads, rather than highways. Let's perhaps only drop the 20
-        km/h data then - that seems too few.</p>
+            <p>How should we proceed? I think we can take the common speeds - dropping 20 and 80 - 113 km/h. Actually -
+                where
+                are you allowed to drive 113 km/h? That's 70 miles/h. I suppose highways - given fractal behavior, I
+                suppose the
+                majority of data would be from municipal and city roads, rather than highways. Let's perhaps only drop
+                the 20
+                km/h data then - that seems too few.</p>
 
-    <p>I've plotted all of them still. Interestingly, especially for lower speed limits, a very significant fraction of
-        cars exceed them, but this somewhat decreases for higher speed limits.</p>
+            <p>I've plotted all of them still. Interestingly, especially for lower speed limits, a very significant
+                fraction of
+                cars exceed them, but this somewhat decreases for higher speed limits.</p>
 
-    <figure>
-        <img src="/static/09062024 - Traffic modelling - speed limit and actual speeds histograms.png"
-            alt="Actual speeds vs speed limits" style="width: 100%;">
-        <figcaption>Actual speeds vs speed limits.</figcaption>
-    </figure>
+            <figure>
+                <img src="/static/09062024 - Traffic modelling - speed limit and actual speeds histograms.png"
+                    alt="Actual speeds vs speed limits" style="width: 100%;">
+                <figcaption>Actual speeds vs speed limits.</figcaption>
+            </figure>
 
-    <p>I'm a bit surprised, though - it seems the speed limit is not exactly respected. Do we have the time in the
-        dataset? I'd be curious to see if people respect it less at night - though then there'd be fewer cars on the
-        road, so it'd have to be a smaller fraction of the data than we're currently seeing. I don't think so - the
-        timestamps are only for about fifteen minutes at most.</p>
+            <p>I'm a bit surprised, though - it seems the speed limit is not exactly respected. Do we have the time in
+                the
+                dataset? I'd be curious to see if people respect it less at night - though then there'd be fewer cars on
+                the
+                road, so it'd have to be a smaller fraction of the data than we're currently seeing. I don't think so -
+                the
+                timestamps are only for about fifteen minutes at most.</p>
 
-    <p>I just realized - this is all only over a single CSV - we have a lot more. Let's combine those CSVs into one
-        dataset. It seems like a pain to save it all to CSV - that'll be very big - so let's try using Parquet. Just
-        reading all the files took some time, so I got it multithreaded.</p>
+            <p>I just realized - this is all only over a single CSV - we have a lot more. Let's combine those CSVs into
+                one
+                dataset. It seems like a pain to save it all to CSV - that'll be very big - so let's try using Parquet.
+                Just
+                reading all the files took some time, so I got it multithreaded.</p>
 
-    <pre><code class="language-python">
+            <pre><code class="language-python">
 def read_csv(file_path):
     return pd.read_csv(file_path, low_memory=False)
 
@@ -215,337 +258,374 @@ def concatenate_datasets(root: str):
     df.to_parquet("traffic_data/data/combined_df.parquet")
     </code></pre>
 
-    <p>Parquet is impressive - it's 674 MB, while the original dataset was 5.43 GB. On the other hand, we have dropped a
-        lot of irrelevant columns related to the fuel usage data, so it's not really a fair comparison. Let's not
-        recreate the other plots, but I am curious about the speed limit adherence one - I will replace the one above.
-    </p>
+            <p>Parquet is impressive - it's 674 MB, while the original dataset was 5.43 GB. On the other hand, we have
+                dropped a
+                lot of irrelevant columns related to the fuel usage data, so it's not really a fair comparison. Let's
+                not
+                recreate the other plots, but I am curious about the speed limit adherence one - I will replace the one
+                above.
+            </p>
 
-    <p>Turns out: there are 13 speed limits in the full dataset. Also, there are large spikes at 0 km/h. I'm guessing
-        that's missing data. I think there are some rounding issues here too, looking at the comb-effect on the data,
-        but that's fine; it only looks a bit ugly.</p>
+            <p>Turns out: there are 13 speed limits in the full dataset. Also, there are large spikes at 0 km/h. I'm
+                guessing
+                that's missing data. I think there are some rounding issues here too, looking at the comb-effect on the
+                data,
+                but that's fine; it only looks a bit ugly.</p>
 
-    <p>Now, how can we analyze this? What we need is some distribution conditional on the speed limit. At that point, we
-        could draw from that distribution,
+            <p>Now, how can we analyze this? What we need is some distribution conditional on the speed limit. At that
+                point, we
+                could draw from that distribution,
 
 
-        and simulate the batching - that would be fun. How can we interpolate? We should be able to regress over the speed
-        limit. Any other parameters that seem relevant? 'Intersection', 'Bus Stops' and 'Focus Points', I suppose. Focus points
-        are any locations that could cause a change in speed, such as crossings, traffic signals, crossings etc. - sixteen in
-        total. I suppose we can include their presence as a dummy. They actually have them as categorical - that's maybe a bit
-        painful.</p>
-        
-        <p>Let's consider - can we just do OLS on this data? Do we have any interaction between the parameters? That would imply
-            overspecification, which isn't too bad: we have a lot of data here, so the increase in variance is probably
-            acceptable. Then - is everything exogenous? We have the actual speed as the dependent variable - are all my
-            parameters exogenous for that? I suppose the speed limit could have been changed in the past to reflect driving
-            speeds etc., but that seems like something we can probably safely ignore. For the most part, I think everything
-            would make sense to be exogenous here.</p>
-        
-        <p>All the dummies have very strong collinearity. How is that measured? I was thinking about that, and I think we could
-            take</p>
-        
-        <p>\(\mathbf i_1 = \frac{\mathbf P_{\mathbf X_1} \boldsymbol \iota}{||\mathbf P_{\mathbf X_1} \boldsymbol \iota||}\)</p>
-        
-        <p>as a measure: we essentially compare the two projection matrices. We can then take \(\mathbf i_i \cdot \mathbf i_2\)
-            to actually check the multicollinearity between these two. <code>statsmodels</code> reports a condition number
-            instead. That's the ratio between the largest and smallest eigenvalue - that makes some sense, actually. For the
-            more reasonable case without all the dummies, we have</p>
-        
-        <table>
-            <tr>
-                <th>Dep. Variable:</th>
-                <td>Vehicle Speed[km/h]</td>
-                <th>R-squared:</th>
-                <td>0.219</td>
-            </tr>
-            <tr>
-                <th>Model:</th>
-                <td>OLS</td>
-                <th>Adj. R-squared:</th>
-                <td>0.219</td>
-            </tr>
-            <tr>
-                <th>Method:</th>
-                <td>Least Squares</td>
-                <th>F-statistic:</th>
-                <td>1.857e+06</td>
-            </tr>
-            <tr>
-                <th>Date:</th>
-                <td>Sun, 09 Jun 2024</td>
-                <th>Prob (F-statistic):</th>
-                <td>0.00</td>
-            </tr>
-            <tr>
-                <th>Time:</th>
-                <td>16:21:21</td>
-                <th>Log-Likelihood:</th>
-                <td>-8.8916e+07</td>
-            </tr>
-            <tr>
-                <th>No. Observations:</th>
-                <td>19861199</td>
-                <th>AIC:</th>
-                <td>1.778e+08</td>
-            </tr>
-            <tr>
-                <th>Df Residuals:</th>
-                <td>19861195</td>
-                <th>BIC:</th>
-                <td>1.778e+08</td>
-            </tr>
-            <tr>
-                <th>Df Model:</th>
-                <td>3</td>
-            </tr>
-            <tr>
-                <th>Covariance Type:</th>
-                <td>nonrobust</td>
-            </tr>
-        </table>
-        
-        <table>
-            <tr>
-                <th></th>
-                <th>coef</th>
-                <th>std err</th>
-                <th>t</th>
-                <th>P &gt; |t|</th>
-                <th>[0.025</th>
-                <th>0.975]</th>
-            </tr>
-            <tr>
-                <td>const</td>
-                <td>11.8424</td>
-                <td>0.015</td>
-                <td>768.955</td>
-                <td>0.000</td>
-                <td>11.812</td>
-                <td>11.873</td>
-            </tr>
-            <tr>
-                <td>Speed Limit with Direction[km/h]</td>
-                <td>0.5862</td>
-                <td>0.000</td>
-                <td>2340.749</td>
-                <td>0.000</td>
-                <td>0.586</td>
-                <td>0.587</td>
-            </tr>
-            <tr>
-                <td>Intersection</td>
-                <td>-4.2484</td>
-                <td>0.024</td>
-                <td>-178.781</td>
-                <td>0.000</td>
-                <td>-4.295</td>
-                <td>-4.202</td>
-            </tr>
-            <tr>
-                <td>Bus Stops</td>
-                <td>-2.8709</td>
-                <td>0.034</td>
-                <td>-83.289</td>
-                <td>0.000</td>
-                <td>-2.938</td>
-                <td>-2.803</td>
-            </tr>
-        </table>
-        
-        <table>
-            <tr>
-                <th>Omnibus:</th>
-                <td>323160.840</td>
-                <th>Durbin-Watson:</th>
-                <td>0.026</td>
-            </tr>
-            <tr>
-                <th>Prob(Omnibus):</th>
-                <td>0.000</td>
-                <th>Jarque-Bera (JB):</th>
-                <td>625961.848</td>
-            </tr>
-            <tr>
-                <th>Skew:</th>
-                <td>-0.064</td>
-                <th>Prob(JB):</th>
-                <td>0.00</td>
-            </tr>
-            <tr>
-                <th>Kurtosis:</th>
-                <td>3.860</td>
-                <th>Cond. No.:</th>
-                <td>441</td>
-            </tr>
-        </table>
-        
-        <p>We have a giant \(F\)-value - the null that \(\boldsymbol \beta = \mathbf 0\) is definitely rejected, then. From that, our
-            \(p\)-value is also great - the integral to the right of our critical value is zero, so the probability of being
-            there is zero: our model is statistically significant. The negative \(t\)-values are just for the direction, so the
-            fact that they're so large implies they are also individually significant.</p>
-        
-        <p>Interestingly, the Durbin-Watson test implies a lot of autocorrelation. <a
-                href="https://en.wikipedia.org/wiki/Durbin%E2%80%93Watson_statistic">Durbin-Watson statistic</a> It's defined
-            as:</p>
-        
-        <p>\(d = \frac{\sum_{t=2}^T (e_t - e_{t-1})^2}{\sum_{t=2}^T e_t^2}\)</p>
-        
-        <p>That makes a lot of sense: we essentially calculate the squared difference between successive items, compared to the
-            square of the item itself. I suppose this makes sense - we technically have a time series here: we are looking at
-            successive measurements from a car trip. We could randomize this by only selecting unique cars, but I assume that
-            will rather diminish our dataset. We only have 384 unique vehicle IDs. However, we have 32536 days, and 4153 trips.
-            Suppose we take only unique combinations of those? So either a different vehicle, a different day, or a different
-            trip - then there are no successive measurements at all. We could probably also take measurements that are far
-            apart, but that'd be more iffy.</p>
-        
-        <p>It's a pain to sample this - let's just take unique days - that's already rather a lot. Actually - I can take all
-            three, then sample from there. Let's try it with</p>
-        
-        <pre><code class="language-python">
+                and simulate the batching - that would be fun. How can we interpolate? We should be able to regress over
+                the speed
+                limit. Any other parameters that seem relevant? 'Intersection', 'Bus Stops' and 'Focus Points', I
+                suppose. Focus points
+                are any locations that could cause a change in speed, such as crossings, traffic signals, crossings etc.
+                - sixteen in
+                total. I suppose we can include their presence as a dummy. They actually have them as categorical -
+                that's maybe a bit
+                painful.</p>
+
+            <p>Let's consider - can we just do OLS on this data? Do we have any interaction between the parameters? That
+                would imply
+                overspecification, which isn't too bad: we have a lot of data here, so the increase in variance is
+                probably
+                acceptable. Then - is everything exogenous? We have the actual speed as the dependent variable - are all
+                my
+                parameters exogenous for that? I suppose the speed limit could have been changed in the past to reflect
+                driving
+                speeds etc., but that seems like something we can probably safely ignore. For the most part, I think
+                everything
+                would make sense to be exogenous here.</p>
+
+            <p>All the dummies have very strong collinearity. How is that measured? I was thinking about that, and I
+                think we could
+                take</p>
+
+            <p>\(\mathbf i_1 = \frac{\mathbf P_{\mathbf X_1} \boldsymbol \iota}{||\mathbf P_{\mathbf X_1} \boldsymbol
+                \iota||}\)</p>
+
+            <p>as a measure: we essentially compare the two projection matrices. We can then take \(\mathbf i_i \cdot
+                \mathbf i_2\)
+                to actually check the multicollinearity between these two. <code>statsmodels</code> reports a condition
+                number
+                instead. That's the ratio between the largest and smallest eigenvalue - that makes some sense, actually.
+                For the
+                more reasonable case without all the dummies, we have</p>
+
+            <table>
+                <tr>
+                    <th>Dep. Variable:</th>
+                    <td>Vehicle Speed[km/h]</td>
+                    <th>R-squared:</th>
+                    <td>0.219</td>
+                </tr>
+                <tr>
+                    <th>Model:</th>
+                    <td>OLS</td>
+                    <th>Adj. R-squared:</th>
+                    <td>0.219</td>
+                </tr>
+                <tr>
+                    <th>Method:</th>
+                    <td>Least Squares</td>
+                    <th>F-statistic:</th>
+                    <td>1.857e+06</td>
+                </tr>
+                <tr>
+                    <th>Date:</th>
+                    <td>Sun, 09 Jun 2024</td>
+                    <th>Prob (F-statistic):</th>
+                    <td>0.00</td>
+                </tr>
+                <tr>
+                    <th>Time:</th>
+                    <td>16:21:21</td>
+                    <th>Log-Likelihood:</th>
+                    <td>-8.8916e+07</td>
+                </tr>
+                <tr>
+                    <th>No. Observations:</th>
+                    <td>19861199</td>
+                    <th>AIC:</th>
+                    <td>1.778e+08</td>
+                </tr>
+                <tr>
+                    <th>Df Residuals:</th>
+                    <td>19861195</td>
+                    <th>BIC:</th>
+                    <td>1.778e+08</td>
+                </tr>
+                <tr>
+                    <th>Df Model:</th>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <th>Covariance Type:</th>
+                    <td>nonrobust</td>
+                </tr>
+            </table>
+
+            <table>
+                <tr>
+                    <th></th>
+                    <th>coef</th>
+                    <th>std err</th>
+                    <th>t</th>
+                    <th>P &gt; |t|</th>
+                    <th>[0.025</th>
+                    <th>0.975]</th>
+                </tr>
+                <tr>
+                    <td>const</td>
+                    <td>11.8424</td>
+                    <td>0.015</td>
+                    <td>768.955</td>
+                    <td>0.000</td>
+                    <td>11.812</td>
+                    <td>11.873</td>
+                </tr>
+                <tr>
+                    <td>Speed Limit with Direction[km/h]</td>
+                    <td>0.5862</td>
+                    <td>0.000</td>
+                    <td>2340.749</td>
+                    <td>0.000</td>
+                    <td>0.586</td>
+                    <td>0.587</td>
+                </tr>
+                <tr>
+                    <td>Intersection</td>
+                    <td>-4.2484</td>
+                    <td>0.024</td>
+                    <td>-178.781</td>
+                    <td>0.000</td>
+                    <td>-4.295</td>
+                    <td>-4.202</td>
+                </tr>
+                <tr>
+                    <td>Bus Stops</td>
+                    <td>-2.8709</td>
+                    <td>0.034</td>
+                    <td>-83.289</td>
+                    <td>0.000</td>
+                    <td>-2.938</td>
+                    <td>-2.803</td>
+                </tr>
+            </table>
+
+            <table>
+                <tr>
+                    <th>Omnibus:</th>
+                    <td>323160.840</td>
+                    <th>Durbin-Watson:</th>
+                    <td>0.026</td>
+                </tr>
+                <tr>
+                    <th>Prob(Omnibus):</th>
+                    <td>0.000</td>
+                    <th>Jarque-Bera (JB):</th>
+                    <td>625961.848</td>
+                </tr>
+                <tr>
+                    <th>Skew:</th>
+                    <td>-0.064</td>
+                    <th>Prob(JB):</th>
+                    <td>0.00</td>
+                </tr>
+                <tr>
+                    <th>Kurtosis:</th>
+                    <td>3.860</td>
+                    <th>Cond. No.:</th>
+                    <td>441</td>
+                </tr>
+            </table>
+
+            <p>We have a giant \(F\)-value - the null that \(\boldsymbol \beta = \mathbf 0\) is definitely rejected,
+                then. From that, our
+                \(p\)-value is also great - the integral to the right of our critical value is zero, so the probability
+                of being
+                there is zero: our model is statistically significant. The negative \(t\)-values are just for the
+                direction, so the
+                fact that they're so large implies they are also individually significant.</p>
+
+            <p>Interestingly, the Durbin-Watson test implies a lot of autocorrelation. <a
+                    href="https://en.wikipedia.org/wiki/Durbin%E2%80%93Watson_statistic">Durbin-Watson statistic</a>
+                It's defined
+                as:</p>
+
+            <p>\(d = \frac{\sum_{t=2}^T (e_t - e_{t-1})^2}{\sum_{t=2}^T e_t^2}\)</p>
+
+            <p>That makes a lot of sense: we essentially calculate the squared difference between successive items,
+                compared to the
+                square of the item itself. I suppose this makes sense - we technically have a time series here: we are
+                looking at
+                successive measurements from a car trip. We could randomize this by only selecting unique cars, but I
+                assume that
+                will rather diminish our dataset. We only have 384 unique vehicle IDs. However, we have 32536 days, and
+                4153 trips.
+                Suppose we take only unique combinations of those? So either a different vehicle, a different day, or a
+                different
+                trip - then there are no successive measurements at all. We could probably also take measurements that
+                are far
+                apart, but that'd be more iffy.</p>
+
+            <p>It's a pain to sample this - let's just take unique days - that's already rather a lot. Actually - I can
+                take all
+                three, then sample from there. Let's try it with</p>
+
+            <pre><code class="language-python">
         df = df.drop_duplicates(subset=["DayNum", "VehId", "Trip"])
             </code></pre>
-        
-        <p>That should drop any duplicates with the same values in these columns. That leaves 32.541 observations. Durbin-Watson
-            is now around 2: no auto-correlation is present anymore. That's amazing: the concept works. We did lose almost all
-            our \(R^2\) though. Everything is still statistically significant, however, but I guess we got a lot of work out of
-            the serial correlation.</p>
-        
-        <table>
-            <tr>
-                <th>Dep. Variable:</th>
-                <td>Vehicle Speed[km/h]</td>
-                <th>R-squared:</th>
-                <td>0.032</td>
-            </tr>
-            <tr>
-                <th>Model:</th>
-                <td>OLS</td>
-                <th>Adj. R-squared:</th>
-                <td>0.031</td>
-            </tr>
-            <tr>
-                <th>Method:</th>
-                <td>Least Squares</td>
-                <th>F-statistic:</th>
-                <td>353.1</td>
-            </tr>
-            <tr>
-                <th>Date:</th>
-                <td>Sun, 09 Jun 2024</td>
-                <th>Prob (F-statistic):</th>
-                <td>1.04e-225</td>
-            </tr>
-            <tr>
-                <th>Time:</th>
-                <td>16:45:34</td>
-                <th>Log-Likelihood:</th>
-                <td>-1.4082e+05</td>
-            </tr>
-            <tr>
-                <th>No. Observations:</th>
-                <td>32541</td>
-                <th>AIC:</th>
-                <td>2.816e+05</td>
-            </tr>
-            <tr>
-                <th>Df Residuals:</th>
-                <td>32537</td>
-                <th>BIC:</th>
-                <td>2.817e+05</td>
-            </tr>
-            <tr>
-                <th>Df Model:</th>
-                <td>3</td>
-            </tr>
-            <tr>
-                <th>Covariance Type:</th>
-                <td>nonrobust</td>
-            </tr>
-        </table>
-        
-        <table>
-            <tr>
-                <th></th>
-                <th>coef</th>
-                <th>std err</th>
-                <th>t</th>
-                <th>P &gt; |t|</th>
-                <th>[0.025</th>
-                <th>0.975]</th>
-            </tr>
-            <tr>
-                <td>const</td>
-                <td>29.5995</td>
-                <td>0.369</td>
-                <td>80.308</td>
-                <td>0.000</td>
-                <td>28.877</td>
-                <td>30.322</td>
-            </tr>
-            <tr>
-                <td>Speed Limit with Direction[km/h]</td>
-                <td>0.1736</td>
-                <td>0.006</td>
-                <td>27.426</td>
-                <td>0.000</td>
-                <td>0.161</td>
-                <td>0.186</td>
-            </tr>
-            <tr>
-                <td>Intersection</td>
-                <td>-6.2793</td>
-                <td>0.395</td>
-                <td>-15.917</td>
-                <td>0.000</td>
-                <td>-7.052</td>
-                <td>-5.506</td>
-            </tr>
-            <tr>
-                <td>Bus Stops</td>
-                <td>4.2801</td>
-                <td>0.809</td>
-                <td>5.289</td>
-                <td>0.000</td>
-                <td>2.694</td>
-                <td>5.866</td>
-            </tr>
-        </table>
-        
-        <table>
-            <tr>
-                <th>Omnibus:</th>
-                <td>1873.208</td>
-                <th>Durbin-Watson:</th>
-                <td>1.949</td>
-            </tr>
-            <tr>
-                <th>Prob(Omnibus):</th>
-                <td>0.000</td>
-                <th>Jarque-Bera (JB):</th>
-                <td>832.839</td>
-            </tr>
-            <tr>
-                <th>Skew:</th>
-                <td>0.178</td>
-                <th>Prob(JB):</th>
-                <td>1.42e-181</td>
-            </tr>
-            <tr>
-                <th>Kurtosis:</th>
-                <td>2.302</td>
-                <th>Cond. No.:</th>
-                <td>461</td>
-            </tr>
-        </table>
-        
-        <p>I'm now sampling \(10^6\) rows - that leaves our correlation coefficient at exactly 2.0, but improves \(R^2\) to
-            0.222. It's not statistically valid, however. <a
-                href="https://stats.stackexchange.com/questions/407033/can-i-take-a-random-sample-of-my-very-large-data-set-to-overcome-non-independenc">Can
-                I take a random sample of my very large data set to overcome non-independence?</a> That makes sense. The concept
-            of only taking unique samples should be, however - assuming the driver's etc. aren't correlated, which they probably
-            are.</p>
-        
-            </main>
-        </body>
-        
-        </html>
+
+            <p>That should drop any duplicates with the same values in these columns. That leaves 32.541 observations.
+                Durbin-Watson
+                is now around 2: no auto-correlation is present anymore. That's amazing: the concept works. We did lose
+                almost all
+                our \(R^2\) though. Everything is still statistically significant, however, but I guess we got a lot of
+                work out of
+                the serial correlation.</p>
+
+            <table>
+                <tr>
+                    <th>Dep. Variable:</th>
+                    <td>Vehicle Speed[km/h]</td>
+                    <th>R-squared:</th>
+                    <td>0.032</td>
+                </tr>
+                <tr>
+                    <th>Model:</th>
+                    <td>OLS</td>
+                    <th>Adj. R-squared:</th>
+                    <td>0.031</td>
+                </tr>
+                <tr>
+                    <th>Method:</th>
+                    <td>Least Squares</td>
+                    <th>F-statistic:</th>
+                    <td>353.1</td>
+                </tr>
+                <tr>
+                    <th>Date:</th>
+                    <td>Sun, 09 Jun 2024</td>
+                    <th>Prob (F-statistic):</th>
+                    <td>1.04e-225</td>
+                </tr>
+                <tr>
+                    <th>Time:</th>
+                    <td>16:45:34</td>
+                    <th>Log-Likelihood:</th>
+                    <td>-1.4082e+05</td>
+                </tr>
+                <tr>
+                    <th>No. Observations:</th>
+                    <td>32541</td>
+                    <th>AIC:</th>
+                    <td>2.816e+05</td>
+                </tr>
+                <tr>
+                    <th>Df Residuals:</th>
+                    <td>32537</td>
+                    <th>BIC:</th>
+                    <td>2.817e+05</td>
+                </tr>
+                <tr>
+                    <th>Df Model:</th>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <th>Covariance Type:</th>
+                    <td>nonrobust</td>
+                </tr>
+            </table>
+
+            <table>
+                <tr>
+                    <th></th>
+                    <th>coef</th>
+                    <th>std err</th>
+                    <th>t</th>
+                    <th>P &gt; |t|</th>
+                    <th>[0.025</th>
+                    <th>0.975]</th>
+                </tr>
+                <tr>
+                    <td>const</td>
+                    <td>29.5995</td>
+                    <td>0.369</td>
+                    <td>80.308</td>
+                    <td>0.000</td>
+                    <td>28.877</td>
+                    <td>30.322</td>
+                </tr>
+                <tr>
+                    <td>Speed Limit with Direction[km/h]</td>
+                    <td>0.1736</td>
+                    <td>0.006</td>
+                    <td>27.426</td>
+                    <td>0.000</td>
+                    <td>0.161</td>
+                    <td>0.186</td>
+                </tr>
+                <tr>
+                    <td>Intersection</td>
+                    <td>-6.2793</td>
+                    <td>0.395</td>
+                    <td>-15.917</td>
+                    <td>0.000</td>
+                    <td>-7.052</td>
+                    <td>-5.506</td>
+                </tr>
+                <tr>
+                    <td>Bus Stops</td>
+                    <td>4.2801</td>
+                    <td>0.809</td>
+                    <td>5.289</td>
+                    <td>0.000</td>
+                    <td>2.694</td>
+                    <td>5.866</td>
+                </tr>
+            </table>
+
+            <table>
+                <tr>
+                    <th>Omnibus:</th>
+                    <td>1873.208</td>
+                    <th>Durbin-Watson:</th>
+                    <td>1.949</td>
+                </tr>
+                <tr>
+                    <th>Prob(Omnibus):</th>
+                    <td>0.000</td>
+                    <th>Jarque-Bera (JB):</th>
+                    <td>832.839</td>
+                </tr>
+                <tr>
+                    <th>Skew:</th>
+                    <td>0.178</td>
+                    <th>Prob(JB):</th>
+                    <td>1.42e-181</td>
+                </tr>
+                <tr>
+                    <th>Kurtosis:</th>
+                    <td>2.302</td>
+                    <th>Cond. No.:</th>
+                    <td>461</td>
+                </tr>
+            </table>
+
+            <p>I'm now sampling \(10^6\) rows - that leaves our correlation coefficient at exactly 2.0, but improves
+                \(R^2\) to
+                0.222. It's not statistically valid, however. <a
+                    href="https://stats.stackexchange.com/questions/407033/can-i-take-a-random-sample-of-my-very-large-data-set-to-overcome-non-independenc">Can
+                    I take a random sample of my very large data set to overcome non-independence?</a> That makes sense.
+                The concept
+                of only taking unique samples should be, however - assuming the driver's etc. aren't correlated, which
+                they probably
+                are.</p>
+
+        </main>
+</body>
+
+</html>
