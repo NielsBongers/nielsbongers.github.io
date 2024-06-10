@@ -305,11 +305,11 @@ def concatenate_datasets(root: str):
                 think we could
                 take</p>
 
-            <p>\(\mathbf i_1 = \frac{\mathbf P_{\mathbf X_1} \boldsymbol \iota}{||\mathbf P_{\mathbf X_1} \boldsymbol
-                \iota||}\)</p>
+            <p>$$\mathbf i_1 = \frac{\mathbf P_{\mathbf X_1} \boldsymbol \iota}{||\mathbf P_{\mathbf X_1} \boldsymbol
+                \iota||}$$</p>
 
-            <p>as a measure: we essentially compare the two projection matrices. We can then take \(\mathbf i_i \cdot
-                \mathbf i_2\)
+            <p>as a measure: we essentially compare the two projection matrices. We can then take $\mathbf i_i \cdot
+                \mathbf i_2$
                 to actually check the multicollinearity between these two. <code>statsmodels</code> reports a condition
                 number
                 instead. That's the ratio between the largest and smallest eigenvalue - that makes some sense, actually.
