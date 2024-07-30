@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["heat_diffusion"]};
+window.SIDEBAR_ITEMS = {"mod":["heat_diffusion","heat_diffusion_rework"],"struct":["HeatDiffusion"]};

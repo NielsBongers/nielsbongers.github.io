@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["standard_simulation"]};
+window.SIDEBAR_ITEMS = {"fn":["create_simulation","standard_simulation"]};

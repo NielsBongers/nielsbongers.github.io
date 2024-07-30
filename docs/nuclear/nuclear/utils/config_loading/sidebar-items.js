@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["load_config"],"struct":["BinParametersTOML","Config","HeatDiffusionParametersTOML","ParallelizationParametersTOML","PlotParametersTOML","SimulationParametersTOML"]};
+window.SIDEBAR_ITEMS = {"fn":["load_config"],"struct":["Config","GridBinParametersTOML","HeatDiffusionParametersTOML","ParallelizationParametersTOML","SimulationParametersTOML"]};

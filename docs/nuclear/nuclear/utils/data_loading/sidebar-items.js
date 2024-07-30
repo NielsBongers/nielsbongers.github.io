@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["load_bin_data_vector","load_cross_sections","load_watt_parameters"]};
+window.SIDEBAR_ITEMS = {"fn":["load_bin_data_vector","load_cross_sections","load_fission_vector","load_watt_parameters"]};
